@@ -33,3 +33,24 @@ soup.find(attrs={'herf' : 'https://www.cuk.edu/'})
 
 # 모든 <p>태그 요소 -> 리스트로 반환
 soup.find_all('p')
+
+'''
+2. BeautifulSoup을 이용한 인터넷 웹페이지 스크래핑
+- FnGuide 웹페이지 접속
+- 웹페이지 소스 -> BeautifulSoup으로 파싱 -> 필요정보 추출
+'''
+
+# 크롤링 대상 url
+url = 'https://comp.fnguide.com/SVO2/ASP/SVD_main.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=11&stkGb=&strResearchYN='
+
+# url을 통해 웹페이지 접속
+res = request.urlopen(url)
+
+# 웹페이지 소스코드 -> html.parser로 파싱
+soup = BeautifulSoup(res, "html.parser")
+
+# id속성이 bizSummaryDate인 요소를 찾아 변수에 저장
+bizSummaryDate = soup.find(attrs={'id' : 'bizSummeryDate'})
+
+# id속성이 bizSummaryHeader인 요소를 찾아 변수에 저장
+bizSummaryHeader = soup.find(attrs={'id' : 'bizSummeryHeader'})
