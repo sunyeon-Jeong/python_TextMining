@@ -58,4 +58,13 @@ else:
 2. 텍스트 데이터 수집결과 확인
 '''
 type(response_body)
+
 print(response_body.decode('utf-8'))
+
+type(result)
+
+result
+
+type(df)
+
+df
