@@ -50,7 +50,14 @@ res = request.urlopen(url)
 soup = BeautifulSoup(res, "html.parser")
 
 # id속성이 bizSummaryDate인 요소를 찾아 변수에 저장
-bizSummaryDate = soup.find(attrs={'id' : 'bizSummeryDate'})
+bizSummaryDate = soup.find(attrs={'id' : 'bizSummaryDate'})
 
 # id속성이 bizSummaryHeader인 요소를 찾아 변수에 저장
-bizSummaryHeader = soup.find(attrs={'id' : 'bizSummeryHeader'})
+bizSummaryHeader = soup.find(attrs={'id' : 'bizSummaryHeader'})
+
+# id 속성이 bizSummaryCotent인 요소를 찾고, 모든 <li> 태그 요소를 집합으로 가져와 변수에 저장
+bizSummaryContent = soup.find(attrs={'id' : 'bizSummaryContent'}).find_all("li")
+
+bizSummaryDate.string
+
+bizSummaryHeader.string.replace(u'\xa0', u' ')
