@@ -14,6 +14,7 @@ nltk.download('wordnet')
 nltk.download('stopwords')
 # 품사 태깅 모듈
 nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger_eng')
 
 '''
 1. 토큰화
@@ -121,3 +122,32 @@ print(tokenizer.tokenize(text))
 # '를 포함해 3글자 이상 단어 구분
 tokenizer = RegexpTokenizer("[\w']{3,}")
 print(tokenizer.tokenize(text))
+
+'''
+5. 불용어 제거와 품사태깅
+'''
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+stop_words_list = stopwords.words('english')
+
+# 라이브러리에서 정의하고 있는 불용어 판단 기준 수정(커스텀)가능
+print('불용어 개수 : ', len(stop_words_list))
+print('불용어 출력 : ', stop_words_list)
+
+text = "Family is not an important thing. It's everything."
+
+stop_words = set(stopwords.words('english')) # 영어 불용어 집합
+
+word_tokens = word_tokenize(text)
+
+result = []
+for word in word_tokens:
+    if word not in stop_words:
+        result.append(word)
+        
+print('불용어 제거 전 : ', word_tokens)
+print('불용어 제거 후 : ', result)
+
+# 토큰 품사 태깅
+print(nltk.pos_tag(result))
