@@ -53,3 +53,23 @@ text = "I am actively looking for Ph.D. students. and you are a Ph.D student."
 
 # 문장 단위로 텍스트 분할
 print(sent_tokenize(text))
+
+'''
+2. 표제어 추출 (Lemmatization) : nltk (WordNetLemmatizer)
+'''
+from nltk.stem import WordNetLemmatizer
+
+# 객체 생성
+lemmatizer = WordNetLemmatizer()
+
+words = ['policy', 'doing', 'organization', 'have', 'going', 'love', 'lives', 'fly', 'dies', 'watched', 'has', 'starting']
+
+print('표제어 추출 전 : ', words)
+
+# 각 단어의 표제어 추출 : 기본 사전형 단어로 변형 (어근)
+print('표제어 추출 후 : ', [lemmatizer.lemmatize(word) for word in words])
+
+# 각 단어의 동사 품사로 표제어 추출
+print('dies의 동사 표제어 : ', lemmatizer.lemmatize('dies', 'v'))
+print('watched의 동사 표제어 : ', lemmatizer.lemmatize('watched', 'v'))
+print('has의 동사 표제어 : ', lemmatizer.lemmatize('has', 'v'))
