@@ -56,6 +56,7 @@ print(sent_tokenize(text))
 
 '''
 2. 표제어 추출 (Lemmatization) : nltk (WordNetLemmatizer)
+- 
 '''
 from nltk.stem import WordNetLemmatizer
 
@@ -73,3 +74,25 @@ print('표제어 추출 후 : ', [lemmatizer.lemmatize(word) for word in words])
 print('dies의 동사 표제어 : ', lemmatizer.lemmatize('dies', 'v'))
 print('watched의 동사 표제어 : ', lemmatizer.lemmatize('watched', 'v'))
 print('has의 동사 표제어 : ', lemmatizer.lemmatize('has', 'v'))
+
+'''
+3. 어간추출 (Stemming) : nltk.stem
+- 정해진 규칙만 보고 단어의 어미를 어림짐작하여 자름
+'''
+from nltk.stem import PorterStemmer
+from nltk.stem import LancasterStemmer
+
+porter_Stemmer = PorterStemmer()
+lancaster_Stemmer = LancasterStemmer()
+
+words = ['policy', 'doing', 'organization', 'have', 'going', 'love', 'lives',
+         'fly', 'dies', 'watched', 'has', 'starting']
+
+print('어간 추출 전 : ', words)
+
+# 포터스테머로 어간 추출
+print('PorterStemmer 어간 추출 후 : ', [porter_Stemmer.stem(word) for word in words])
+
+# 랭커스터스테머로 어간 추출
+print('LancasterStemmer 어간 추출 후 : ', [lancaster_Stemmer.stem(word) for word in words])
+
