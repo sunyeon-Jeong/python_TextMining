@@ -96,3 +96,13 @@ print('PorterStemmer 어간 추출 후 : ', [porter_Stemmer.stem(word) for word 
 # 랭커스터스테머로 어간 추출
 print('LancasterStemmer 어간 추출 후 : ', [lancaster_Stemmer.stem(word) for word in words])
 
+'''
+4. 정규표현식 (Regular Expression)
+'''
+import re
+
+# []에 해당하는 문자 출력
+print(re.findall('[abc]', 'How are you, boy?'))
+
+# []에 해당하는 문자 출력
+print(re.findall('[0123456789]', '3a5b7c9d'))
