@@ -97,7 +97,9 @@ print('PorterStemmer 어간 추출 후 : ', [porter_Stemmer.stem(word) for word 
 print('LancasterStemmer 어간 추출 후 : ', [lancaster_Stemmer.stem(word) for word in words])
 
 '''
-4. 정규표현식 (Regular Expression)
+4. 정규표현식 (Regular Expression) : nltk.tokenize (RegexpTokenizer)
+- 검색하는 모듈
+- 다른 토크나이저에 비해 융통성이 있는 편 (표현방식 지정이 가능하기 때문에)
 '''
 import re
 
@@ -106,3 +108,16 @@ print(re.findall('[abc]', 'How are you, boy?'))
 
 # []에 해당하는 문자 출력
 print(re.findall('[0123456789]', '3a5b7c9d'))
+
+# 토크나이저 조건을 직접 지정
+from nltk.tokenize import RegexpTokenizer
+
+text = 'Mr. Jone’s Orphanage is as cheery as cheery goes for a pastry shop'
+
+# 문자, 숫자, '를 포함해 단어 구분
+tokenizer = RegexpTokenizer('[\w]+')
+print(tokenizer.tokenize(text))
+
+# '를 포함해 3글자 이상 단어 구분
+tokenizer = RegexpTokenizer("[\w']{3,}")
+print(tokenizer.tokenize(text))
