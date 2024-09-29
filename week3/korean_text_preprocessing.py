@@ -182,3 +182,46 @@ finder.apply_freq_filter(3)
 
 # collocation 계산 후, 상위 10개 출력
 pprint(finder.nbest(measures.pmi, 10))
+
+'''
+6. 한국어 구문 분석
+- 명사구(Noun), 동사구(Verb), 형용사구(Adjective)
+'''
+import konlpy
+import nltk
+import matplotlib.pyplot as plt
+
+# 품사 태깅
+sentence = '만 6세 이하의 초등학교 취학 전 자녀를 양육하기 위해서는'
+words = konlpy.tag.Okt().pos(sentence)
+
+# 구(Chunk) 문법 정의
+grammar = """
+NP: {<N.*>*<Suffix>?}   # 명사구
+VP: {<V.*>*}            # 동사구
+AP: {<A.*>*}            # 형용사구
+"""
+
+# 정규 표현식 기반 파서 생성
+parser = nltk.RegexpParser(grammar)
+
+# 구(Chunk) 추출
+chunks = parser.parse(words)
+
+# 전체 트리 구조 출력
+print("# 전체 트리 구조 출력")
+print(chunks.pprint())
+
+# 명사구(NP)만 출력
+print("\n# 명사구(NP)만 출력")
+for subtree in chunks.subtrees():
+    if subtree.label() == 'NP':
+        print(' '.join((e[0] for e in list(subtree))))
+        print(subtree.pprint())
+
+# 동사구(VP)만 출력
+print("\n# 동사구(VP)만 출력")
+for subtree in chunks.subtrees():
+    if subtree.label() == 'VP':
+        print(' '.join((e[0] for e in list(subtree))))
+        print(subtree.pprint())
