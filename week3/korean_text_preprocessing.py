@@ -16,13 +16,24 @@ nltk.download('punkt')
 '''
 # Okt(Open Korea Text)
 from konlpy.tag import Okt
-
 # Komoran(코모란)
 from konlpy.tag import Komoran
-
 # Hannanum(한나눔)
 from konlpy.tag import Hannanum
-
 # 꼬꼬마(Kkma)
 from konlpy.tag import Kkma
+
+# 객체생성
+okt = Okt()
+komoran = Komoran()
+hannanum = Hannanum()
+kkma = Kkma()
+
+text = "세종대왕은 온 백성이 자유롭게 자신의 의사를 표현하고 정보를 얻을 수 있는 세상을 꿈꾸며 한글을 창제하였습니다"
+
+# morphs : 토큰화 메서드
+print("Okt : ", okt.morphs(text))
+print("Komoran : ", komoran.morphs(text))
+print("Hannanum : ", hannanum.morphs(text))
+print("Kkma : ", kkma.morphs(text))
 
