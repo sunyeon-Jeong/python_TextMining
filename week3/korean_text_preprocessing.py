@@ -143,3 +143,42 @@ pprint(cnt.most_common(20)) # pprint : 데이터를 이쁘게 출력
 '''
 print('\nLocations of "대한민국" in the document : ')
 concordance(u'대한민국', doc, show=True)
+
+'''
+5. 연속된 단어 찾기 (collocation)
+- 한국어 단어의 연관성 분석을 위해 NLTK의 'colloctions'을 사용해 연속된 단어를 찾음
+'''
+from konlpy.tag import Kkma
+from konlpy.corpus import kolaw
+from konlpy.utils import pprint
+from nltk import collocations
+
+# colloction 방법 선택
+# - measures = collocations.BigramAssocMeasures() : bi-gram
+# - measures = colloctions.TrigramAssocMeasures() : Tri-gram
+measures = collocations.QuadgramAssocMeasures() # 연속된 4개의 단어조합
+
+doc = kolaw.open('constitution.txt').read()
+
+# Kkma 형태소 분석기 사용을 통한 품사태깅
+tagged_words = Kkma().pos(doc)
+
+# 품사 태깅 된 결과에서 단어만 추출
+words = [w for w, t in tagged_words]
+
+# 불용어 (stop_word) 정의
+ignored_words = [u'안녕'] # u는 유니코드
+
+# finder 정의 : 콜로케이션 객체 생성
+# finder = collocations.BigramCollocationFinder.from_words(words)
+# finder = collocations.TrigramCollocationFinder.from_words(words)
+finder = collocations.QuadgramCollocationFinder.from_words(words)
+
+# 필터
+# 단어 길이가 2 미만이거나, stopword에 포함될 경우 제외
+finder.apply_word_filter(lambda w: len(w) < 2 or w in ignored_words)
+# 빈도가 3 이하인 경우 제외
+finder.apply_freq_filter(3)
+
+# collocation 계산 후, 상위 10개 출력
+pprint(finder.nbest(measures.pmi, 10))
