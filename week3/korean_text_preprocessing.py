@@ -103,3 +103,43 @@ print(okt.nouns(text))
 print(komoran.nouns(text))
 print(hannanum.nouns(text))
 print(kkma.nouns(text))
+
+'''
+4. 문서 탐색 : 문서 내의 문자/토큰 수, 빈도 수 높은 단어 탐색
+(https://konlpy.org/en/latest/examples/explore/)
+'''
+# 빈도 계산 모듈
+from collections import Counter
+
+# konlpy 라이브러리
+from konlpy.corpus import kolaw
+from konlpy.tag import Hannanum
+from konlpy.utils import concordance, pprint
+from matplotlib import pyplot
+
+# 대한민국 헌법 텍스트파일 (constitution.txt) 파일읽기
+doc = kolaw.open('constitution.txt').read()
+
+# Hannanum 형태소 분석기 -> 품사태깅
+pos = Hannanum().pos(doc)
+
+# 품사 태깅 된 결과 빈도 계산
+cnt = Counter(pos)
+
+# 텍스트 문자 수, 단어 수 (띄어쓰기 기준), 품사 태깅 집합
+print('nchars : ', len(doc))
+print('ntokens : ', len(doc.split()))
+print('nmorphs : ', len(set(pos)))
+
+# 가장 빈도가 높은 상위 20개의 형태소
+print('\nTop 20 frequent morphemes : ')
+pprint(cnt.most_common(20)) # pprint : 데이터를 이쁘게 출력
+
+# "대한민국"이 텍스트 내에서 나타나는 위치 출력
+'''
+- concordance : 특정 단어가 문서에서 등장하는 위치를 찾는 함수
+- u'대한민국' : 검색할 단어를 유니코드 문자열로 지정
+- show=True : 결과를 출력하라는 옵션
+'''
+print('\nLocations of "대한민국" in the document : ')
+concordance(u'대한민국', doc, show=True)
