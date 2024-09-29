@@ -50,3 +50,33 @@ para_kor = """세종대왕은 온 백성이 자유롭게 자신의 의사를 표
 # 문장 단위로 텍스트 분할
 sent_tokenize(para_kor)
 
+'''
+2. 불용어 제거
+'''
+text = "세종대왕은 온 백성이 자유롭게 자신의 의사를 표현하고 정보를 얻을 수 있는 세상을 꿈꾸며 한글을 창제하였습니다"
+stop_words = "은 이 의 을 를 하고 있는 하였습니다"
+
+# 불용어 문자열을 공백 기준으로 나눠서 집합으로 변환
+stop_words = set(stop_words.split(' '))
+
+# 단어 토큰화
+word_tokens = okt.morphs(text)
+
+# 토큰화된 텍스트에서 불용어 제거
+result = [word for word in word_tokens if not word in stop_words]
+
+print('불용어 제거 전 : ', word_tokens)
+print('불용어 제거 후 : ', result)
+
+# 불용어 사전 파일
+stop_words_file = open("/Users/sunyeonjeong/dev/github/textMining/week3/korean_stopwords.txt", "r")
+stop_words_text = stop_words_file.read()
+stop_words_text
+
+stop_words_set = set(stop_words_text.split('\n'))
+stop_words_set
+
+result = [word for word in word_tokens if not word in stop_words_set]
+
+print("불용어 제거 전 : ", word_tokens)
+print("불용어 제거 후 : ", result)
