@@ -80,3 +80,26 @@ result = [word for word in word_tokens if not word in stop_words_set]
 
 print("불용어 제거 전 : ", word_tokens)
 print("불용어 제거 후 : ", result)
+
+'''
+3. 품사태깅
+'''
+# 객체생성
+okt = Okt()
+komoran = Komoran()
+hannanum = Hannanum()
+kkma = Kkma()
+
+text = "세종대왕은 온 백성이 자유롭게 자신의 의사를 표현하고 정보를 얻을 수 있는 세상을 꿈꾸며 한글을 창제하였습니다"
+
+# 토큰화 결과와 함께 각 토큰마다 해당하는 품사 태그가 붙음
+print(okt.pos(text))
+print(komoran.pos(text))
+print(hannanum.pos(text))
+print(kkma.pos(text))
+
+# 토큰화 결과에서 명사만 추출
+print(okt.nouns(text))
+print(komoran.nouns(text))
+print(hannanum.nouns(text))
+print(kkma.nouns(text))
