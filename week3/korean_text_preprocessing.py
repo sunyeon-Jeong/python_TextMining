@@ -37,3 +37,16 @@ print("Komoran : ", komoran.morphs(text))
 print("Hannanum : ", hannanum.morphs(text))
 print("Kkma : ", kkma.morphs(text))
 
+'''
+1-2. 문장토큰화
+'''
+# 문장 토크나이저
+from nltk.tokenize import sent_tokenize
+
+para_kor = """세종대왕은 온 백성이 자유롭게 자신의 의사를 표현하고 정보를 얻을 수 있는 세상을 꿈꾸며 ‘한글’을 창제하였습니다.
+국립국어원은 그 꿈을 이어가는 중추적인 기관으로서 사명을 다할 것입니다.
+한국어와 한글이, 남과 북을 넘어 온 세상 사람들이 소통하는 도구가 되어 우리의 삶을 더욱 풍성하게 하는 데에 힘을 보태겠습니다."""
+
+# 문장 단위로 텍스트 분할
+sent_tokenize(para_kor)
+
