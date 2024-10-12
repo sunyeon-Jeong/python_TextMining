@@ -136,3 +136,36 @@ for doc in docs:
 tfidf_score = pd.DataFrame(result, columns=vocas)
 
 tfidf_score
+
+
+'''
+3. 코사인 유사도 (Cosine Similarity)
+- 두 벡터 간의 코사인 각도를 이용하여 구하는 두 벡터의 유사도
+- 코사인유사도 : -1 (180도 방향)
+- 코사인유사도 : 0 (90도 방향)
+- 코사인유사도 : 1 (0도 방향)
+'''
+import numpy as np
+from numpy import dot
+from numpy.linalg import norm
+
+def cos_sim(A, B):
+    return dot(A, B) / (norm(A) * norm(B))
+
+doc1 = np.array([0,1,1,1])
+doc2 = np.array([1,0,1,1])
+doc3 = np.array([2,0,2,2])
+
+print('문서1과 문서2의 유사도 :',cos_sim(doc1, doc2))
+print('문서1과 문서3의 유사도 :',cos_sim(doc1, doc3))
+print('문서2와 문서3의 유사도 :',cos_sim(doc2, doc3))
+
+# 과일 텍스트 예시의 TF-IDF를 이용한 코사인 유사도 계산
+doc1 = tfidf_score.iloc[0]
+doc2 = tfidf_score.iloc[1]
+doc3 = tfidf_score.iloc[2]
+doc4 = tfidf_score.iloc[2]
+
+print('문서1과 문서2의 유사도 :',cos_sim(doc1, doc2))
+print('문서1과 문서3의 유사도 :',cos_sim(doc1, doc3))
+print('문서1과 문서4의 유사도 :',cos_sim(doc1, doc4))
