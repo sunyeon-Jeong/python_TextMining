@@ -38,3 +38,33 @@ dataframe_bow['문서'] = docs
 bow_scores
 
 dataframe_bow
+
+
+'''
+2. TF-IDF
+- 특정 문서 내에서 단어 빈도가 높을수록 : 중요도 증가
+- 전체 문서들에서는 그 단어를 포함한 문서가 적을수록(흔하지 않을수록) : 점수 증가
+-> 모든 문서에 나타나는 흔한 단어의 중요도를 낮게 두는 방식
+'''
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# TfidfVectorizer 초기화
+tfidfVectorizer = TfidfVectorizer()
+
+# 문서를 Tf-IDF 행렬로 변환
+tfidf_matrix = tfidfVectorizer.fit_transform(docs)
+
+# TF-IDF 행렬을 array로 저장
+tfidf_scores = tfidf_matrix.toarray()
+
+# 특성이름(단어) 가져오기
+feature_names = tfidfVectorizer.get_feature_names_out()
+
+# DataFrame 생성
+dataframe_tfidf = pd.DataFrame(tfidf_scores, columns=feature_names)
+
+dataframe_tfidf['문서'] = docs
+
+tfidf_scores
+
+dataframe_tfidf
