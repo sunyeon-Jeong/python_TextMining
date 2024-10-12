@@ -68,3 +68,21 @@ dataframe_tfidf['문서'] = docs
 tfidf_scores
 
 dataframe_tfidf
+
+
+'''
+3. 코사인 유사도
+- 두 벡터 간의 코사인 각도를 이용하여 구하는 두 벡터의 유사도
+- 코사인유사도 : -1 (180도 방향)
+- 코사인유사도 : 0 (90도 방향)
+- 코사인유사도 : 1 (0도 방향)
+'''
+from sklearn.metrics.pairwise import cosine_similarity
+
+# 모든 문서(BoW) 사이의 코사인 유사도 개선
+cosine_similarities = cosine_similarity(bow_matrix)
+
+# 코사인 유사도 행렬 출력
+dataframe_cosine_similarities = pd.DataFrame(cosine_similarities, columns=docs, index=docs)
+
+dataframe_cosine_similarities
