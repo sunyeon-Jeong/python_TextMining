@@ -21,6 +21,7 @@ def build_bag_of_words(doc):
         
         # 단어가 처음 등장 -> 인덱스 부여, BoW에 1 추가
         if word not in word_to_index.keys():
+            # 딕셔너리 key : word, value : 딕셔너리 길이
             word_to_index[word] = len(word_to_index)
             bow.insert(len(word_to_index) -1, 1)
         
@@ -98,17 +99,23 @@ def tfidf(t, d):
     return tf(t, d) * idf(t)
 
 # 문서 내에 등장하는 단어의 집합
+# - docs 리스트에 있는 각 문서 doc에 대해, 해당 문서를 공백을 기준으로 나누어 단어 w 생성
+# - 생성된 단어들을 set으로 감싸 중복단어를 제거함 -> 리스트로 변환
 vocas = list(set(w for doc in docs for w in doc.split()))
+# - 중복된 단어가 제거된 고유리스트를 알파벳 순으로 정렬
 vocas.sort()
 
 vocas
 
 result = []
 
+# 문서 리스트 -> 특정 문서
 for doc in docs:
     result.append([])
     
+    # 단어의 집합 -> 단어
     for voca in vocas:
+        # 리스트 맨 뒤에 tf 값 계산 후 append
         result[-1].append(tf(voca, doc))
 
 tf_score = pd.DataFrame(result, columns=vocas)
@@ -117,7 +124,10 @@ tf_score
 
 result = []
 
+# 단어의 집합 -> 단어
 for voca in vocas:
+    
+    # 리스트에 단어의 idf값 계산 후 append
     result.append(idf(voca))
     
 idf_score = pd.DataFrame(result, index=vocas, columns=["IDF"])
@@ -126,9 +136,11 @@ idf_score
 
 result = []
 
+# 문서 리스트 -> 특정 문서
 for doc in docs:
     result.append([])
     
+    # 단어의 집합 -> 단어
     for voca in vocas:
         result[-1].append(tfidf(voca, doc))
         
@@ -141,6 +153,7 @@ tfidf_score
 '''
 3. 코사인 유사도 (Cosine Similarity)
 - 두 벡터 간의 코사인 각도를 이용하여 구하는 두 벡터의 유사도
+- (문서A 요소1 * 문서B 요소1)/루트(각문서 요소 제곱)
 - 코사인유사도 : -1 (180도 방향)
 - 코사인유사도 : 0 (90도 방향)
 - 코사인유사도 : 1 (0도 방향)
@@ -149,6 +162,8 @@ import numpy as np
 from numpy import dot
 from numpy.linalg import norm
 
+# dot() : 두 객체 간의 행렬곱
+# norm() : 벡터 길이를 구함
 def cos_sim(A, B):
     return dot(A, B) / (norm(A) * norm(B))
 
